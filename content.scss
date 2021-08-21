@@ -1,5 +1,20 @@
+$clr-red: #c31;
+$clr-black: rgba(black, 1);
+$clr-gray: rgba(black, 0.7);
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-size: 24px;
+}
+
+section {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .something::before {
@@ -71,7 +86,6 @@ a[href^="http"]::after {
   align-items: center;
   border: 2px solid #abc;
   color: #abc;
-  box-sizing: border-box;
   counter-reset: ol-counter;
 }
 
@@ -84,4 +98,97 @@ a[href^="http"]::after {
   content: "item " counter(ol-counter) ": ";
   font-size: 0.75em;
   color: red;
+}
+
+.intro {
+  position: relative;
+  display: inline-block;
+
+  &::before,
+  &::after {
+    content: "";
+    height: 100%;
+    display: block;
+    position: absolute;
+  }
+  &::before {
+    background: white;
+    z-index: -1;
+    left: -20px;
+    right: -20px;
+  }
+  &::after {
+    background: red;
+    width: 100vw;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    z-index: -2;
+  }
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  margin: 1em;
+  background: $clr-gray;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 1.25em;
+    bottom: 1.25em;
+    left: 1.25em;
+    right: 1.25em;
+  }
+  &::before {
+    transform: scale(0, 1);
+    transition: transform ease-in-out 300ms;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+  }
+  &::after {
+    transform: scale(1, 0);
+    transition: transform ease-in-out 300ms;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+  }
+  &:hover::before {
+    transform: scale(1.05, 1);
+  }
+  &:hover::after {
+    transform: scale(1, 1.05);
+  }
+}
+
+.card_image {
+  max-width: 100%;
+  display: block;
+  transition: opacity ease-out 300ms;
+  opacity: 0.7;
+}
+
+.card:hover .card_image {
+  opacity: 0.4;
+}
+
+.card_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0;
+  transition: opacity ease-out 300ms;
+}
+
+.card:hover .card_text {
+  opacity: 1;
 }
